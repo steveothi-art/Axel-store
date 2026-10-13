@@ -1,552 +1,248 @@
-
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#ffffff">
-    <meta name="description"
-          content="AXEL Store, boutique en ligne élégante.">
-    <title>AXEL Store — Boutique en ligne</title>
+    <meta name="description" content="AXEL Store, boutique en ligne. Commandez simplement via WhatsApp.">
+    <title>AXEL Store | Boutique en ligne</title>
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
+ 
 <body>
-    <div class="announcement">
-        Livraison disponible • Découvrez notre sélection AXEL
-    </div>
-
-    <header class="header">
-
+    <a class="skip-link" href="#boutique">Aller à la boutique</a>
+ 
+    <div class="announcement">Livraison disponible. Commande rapide via WhatsApp.</div>
+ 
+    <header class="header" id="header">
         <div class="header-inner">
-            <button
-                class="icon-btn mobile-only"
-                id="menuBtn"
-                aria-label="Ouvrir le menu"
-                aria-expanded="false">
-                ☰
-            </button>
-
-            <!-- Logo AXEL -->
-            <a href="#accueil" class="brand">
-
-                <img
-                    src="AXELlogo.jpeg"
-                    alt="Logo AXEL">
-
-            </a>
-
-            <nav class="nav" id="nav">
-
-                <a href="#accueil">Accueil</a>
-                <a href="#boutique">Boutique</a>
-                <a href="#avantages">Nos engagements</a>
-                <a href="#contact">Contact</a>
-
-            </nav>
-
-            <div class="header-actions">
-
-                <button
-                    class="icon-btn"
-                    id="searchToggle"
-                    aria-label="Rechercher">
-                    ⌕
+ 
+            <div class="header-left">
+                <button class="icon-btn hamburger" id="menuBtn" type="button"
+                        aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
                 </button>
-
-                <button
-                    class="icon-btn"
-                    id="favToggle"
-                    aria-label="Afficher les favoris">
-                    ♡
-                    <small id="favCount">0</small>
-                </button>
-
-                <button
-                    class="icon-btn"
-                    id="cartToggle"
-                    aria-label="Ouvrir le panier">
-                    🛍
-                    <small id="cartCount">0</small>
-                </button>
-
-            </div>
-
-        </div>
-
-        <div
-            class="search-bar"
-            id="searchBar"
-            hidden>
-
-            <input
-                id="globalSearch"
-                type="search"
-                placeholder="Rechercher un article..."
-                aria-label="Rechercher un article">
-
-        </div>
-
-    </header>
-
-    <main>
-
-        <!-- SECTION ACCUEIL -->
-        <section class="hero" id="accueil">
-
-            <div class="hero-copy">
-
-                <span class="eyebrow">
-                    LA SÉLECTION AXEL
-                </span>
-
-                <h1>
-                    L'essentiel du style.
-                    <br>
-                    <em>Sans compromis.</em>
-                </h1>
-
-                <p>
-                    Des pièces choisies avec soin pour
-                    sublimer votre quotidien.
-                    Un shopping simple, élégant
-                    et accessible.
-                </p>
-
-                <a
-                    href="#boutique"
-                    class="btn primary">
-
-                    Découvrir la collection
-                    <span>↗</span>
-
+ 
+                <a href="#accueil" class="brand" aria-label="AXEL, retour à l'accueil">
+                    <img src="AXELlogo.jpeg" alt="Logo AXEL">
                 </a>
-
-                <div class="hero-notes">
-
-                    <span>✓ Sélection soignée</span>
-
-                    <span>✓ Commande facile</span>
-
-                </div>
-
             </div>
-
-            <!-- Image principale -->
-            <div class="hero-art">
-
-                <div class="art-ring"></div>
-
-                <img
-                    src="AXELlogo.jpeg"
-                    alt="Identité AXEL">
-
+ 
+            <div class="header-actions">
+                <button class="icon-btn" id="searchToggle" type="button"
+                        aria-label="Rechercher" aria-expanded="false" aria-controls="searchBar">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+                    </svg>
+                </button>
+ 
+                <button class="icon-btn" id="favToggle" type="button" aria-label="Afficher les favoris">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12C19 16.4 12 21 12 21z"/>
+                    </svg>
+                    <small class="badge" id="favCount" hidden>0</small>
+                </button>
+ 
+                <button class="icon-btn" id="cartToggle" type="button" aria-label="Ouvrir le panier">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/>
+                    </svg>
+                    <small class="badge" id="cartCount" hidden>0</small>
+                </button>
+            </div>
+        </div>
+ 
+        <div class="search-bar" id="searchBar" hidden>
+            <input id="globalSearch" type="search" placeholder="Rechercher un article" aria-label="Rechercher un article" autocomplete="off">
+        </div>
+ 
+        <nav class="nav" id="nav" aria-label="Navigation principale">
+            <a href="#accueil">Accueil</a>
+            <a href="#boutique">Boutique</a>
+            <a href="#engagements">Nos engagements</a>
+            <a href="#contact">Contact</a>
+            <p class="nav-note">Prix en FCFA. Disponibilité confirmée sur WhatsApp.</p>
+        </nav>
+        <div class="nav-overlay" id="navOverlay"></div>
+    </header>
+ 
+    <main>
+ 
+        <!-- ACCUEIL -->
+        <section class="hero" id="accueil">
+            <div class="hero-copy">
+                <h1>L'essentiel du style, sans compromis.</h1>
+                <p>Des pièces choisies avec soin pour votre quotidien. Vous choisissez, vous ajoutez au panier, vous confirmez sur WhatsApp.</p>
+ 
+                <div class="hero-actions">
+                    <a href="#boutique" class="btn primary">Voir la collection</a>
+                    <a href="#contact" class="btn ghost">Poser une question</a>
+                </div>
+ 
+                <ul class="hero-notes">
+                    <li>Sélection soignée</li>
+                    <li>Commande en 2 minutes</li>
+                    <li>Prix en FCFA</li>
+                </ul>
+            </div>
+ 
+            <div class="hero-art" aria-hidden="true">
+                <div class="art-block"></div>
+                <div class="art-frame">
+                    <img src="AXELlogo.jpeg" alt="">
+                </div>
                 <div class="art-tag">
-
-                    NOUVELLE COLLECTION
-
+                    <span>Collection</span>
                     <strong>2026</strong>
-
                 </div>
-
             </div>
-
         </section>
-
-        <!-- AVANTAGES DE LA BOUTIQUE -->
-        <section
-            class="benefit-strip"
-            id="avantages">
-
-            <div>
-
-                <b>◇</b>
-
-                <span>
-                    <strong>
-                        Qualité sélectionnée
-                    </strong>
-
-                    <small>
-                        Des articles choisis avec soin
-                    </small>
-                </span>
-
-            </div>
-
-            <div>
-
-                <b>↗</b>
-
-                <span>
-                    <strong>
-                        Commande rapide
-                    </strong>
-
-                    <small>
-                        Directement via WhatsApp
-                    </small>
-                </span>
-
-            </div>
-
-            <div>
-
-                <b>♡</b>
-
-                <span>
-                    <strong>
-                        Votre style
-                    </strong>
-
-                    <small>
-                        Des nouveautés à découvrir
-                    </small>
-                </span>
-
-            </div>
-
-        </section>
-
-        <!-- BOUTIQUE -->
-        <section
-            class="shop section"
-            id="boutique">
-
-            <div class="section-heading">
-
+ 
+        <!-- ENGAGEMENTS -->
+        <section class="benefits" id="engagements" aria-label="Nos engagements">
+            <div class="benefit">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>
                 <div>
-
-                    <span class="eyebrow">
-                        DÉCOUVREZ AXEL
-                    </span>
-
-                    <h2>
-                        Notre collection
-                        <span class="red">.</span>
-                    </h2>
-
-                    <p>
-                        Découvrez des articles
-                        pensés pour vous.
-                    </p>
-
+                    <strong>Qualité sélectionnée</strong>
+                    <span>Chaque article est choisi avec soin.</span>
                 </div>
-
-                <!-- Nombre de résultats -->
-                <span
-                    id="resultCount"
-                    class="result-count">
-                </span>
-
             </div>
-
-            <!-- FILTRES DES PRODUITS -->
+            <div class="benefit">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.7-5.2A8.5 8.5 0 1 1 21 12z"/></svg>
+                <div>
+                    <strong>Commande par WhatsApp</strong>
+                    <span>Votre panier arrive prêt à envoyer.</span>
+                </div>
+            </div>
+            <div class="benefit">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>
+                <div>
+                    <strong>Livraison disponible</strong>
+                    <span>Frais confirmés avant le paiement.</span>
+                </div>
+            </div>
+        </section>
+ 
+        <!-- BOUTIQUE -->
+        <section class="shop section" id="boutique">
+            <div class="section-heading">
+                <div>
+                    <h2>Notre collection</h2>
+                    <p>Ajoutez vos coups de cœur aux favoris ou directement au panier.</p>
+                </div>
+                <span class="result-count" id="resultCount" aria-live="polite"></span>
+            </div>
+ 
             <div class="toolbar">
-
-                <div
-                    class="filters"
-                    id="filters">
-
-                    <button
-                        class="chip active"
-                        data-category="Tous">
-                        Tout voir
-                    </button>
-
-                    <button
-                        class="chip"
-                        data-category="Mode">
-                        Mode
-                    </button>
-
-                    <button
-                        class="chip"
-                        data-category="Accessoires">
-                        Accessoires
-                    </button>
-
-                    <button
-                        class="chip"
-                        data-category="Lifestyle">
-                        Lifestyle
-                    </button>
-
+                <div class="filters" id="filters" role="group" aria-label="Filtrer par catégorie">
+                    <button class="chip active" type="button" data-category="Tous">Tout voir</button>
+                    <button class="chip" type="button" data-category="Mode">Mode</button>
+                    <button class="chip" type="button" data-category="Accessoires">Accessoires</button>
+                    <button class="chip" type="button" data-category="Lifestyle">Lifestyle</button>
                 </div>
-
-                <!-- Tri -->
-                <select
-                    id="sort"
-                    aria-label="Trier les produits">
-
-                    <option value="featured">
-                        À la une
-                    </option>
-
-                    <option value="asc">
-                        Prix croissant
-                    </option>
-
-                    <option value="desc">
-                        Prix décroissant
-                    </option>
-
-                    <option value="name">
-                        Nom A-Z
-                    </option>
-
-                </select>
-
+ 
+                <label class="sort">
+                    <span>Trier</span>
+                    <select id="sort">
+                        <option value="featured">À la une</option>
+                        <option value="asc">Prix croissant</option>
+                        <option value="desc">Prix décroissant</option>
+                        <option value="name">Nom A-Z</option>
+                    </select>
+                </label>
             </div>
-
-            <!-- PRODUITS AFFICHÉS PAR JAVASCRIPT -->
-            <div
-                class="products"
-                id="products">
+ 
+            <div class="products" id="products"></div>
+ 
+            <div class="empty" id="empty" hidden>
+                <strong>Aucun produit trouvé.</strong>
+                <span>Changez de catégorie ou modifiez votre recherche.</span>
+                <button class="btn ghost" type="button" id="resetFilters">Réinitialiser</button>
             </div>
-
-            <!-- Aucun produit -->
-            <div
-                class="empty"
-                id="empty"
-                hidden>
-
-                Aucun produit trouvé.
-                Essayez une autre recherche.
-
-            </div>
-
         </section>
-
-        <!-- SECTION PROMOTIONNELLE -->
+ 
+        <!-- PROMO -->
         <section class="promo">
-
-            <span class="eyebrow">
-                L'ESPRIT AXEL
-            </span>
-
-            <h2>
-                Simple. Audacieux. Intemporel.
-            </h2>
-
-            <p>
-                Une sélection qui vous ressemble,
-                avec une touche de caractère.
-            </p>
-
-            <a
-                href="#boutique"
-                class="btn light">
-
-                Explorer la boutique ↗
-
-            </a>
-
+            <h2>Simple. Audacieux. Intemporel.</h2>
+            <p>Une sélection qui vous ressemble, avec une touche de caractère.</p>
+            <a href="#boutique" class="btn light">Explorer la boutique</a>
         </section>
-
+ 
         <!-- CONTACT -->
-        <section
-            class="newsletter section"
-            id="contact">
-
+        <section class="contact section" id="contact">
             <div>
-
-                <span class="eyebrow">
-                    RESTONS CONNECTÉS
-                </span>
-
-                <h2>
-                    Une question sur un article ?
-                </h2>
-
-                <p>
-                    Notre équipe est disponible
-                    pour vous accompagner
-                    dans votre commande.
-                </p>
-
+                <h2>Une question sur un article ?</h2>
+                <p>Notre équipe vous répond sur WhatsApp et vous accompagne jusqu'à la livraison.</p>
             </div>
-
-            <a
-                class="btn primary"
-                id="contactWhatsApp"
-                href="https://wa.me/2250759582002?text=Bonjour%20AXEL%2C%20je%20souhaite%20des%20renseignements."
-                rel="noopener">
-
-                Nous contacter ↗
-
-            </a>
-
+            <a class="btn primary" id="contactWhatsApp"
+               href="https://wa.me/2250152348458?text=Bonjour%20AXEL%2C%20je%20souhaite%20des%20renseignements."
+               target="_blank" rel="noopener">Écrire sur WhatsApp</a>
         </section>
     </main>
-
-    <footer>
-
+ 
+    <footer class="footer">
         <div class="footer-main">
-
-            <div>
-
-                <div class="footer-brand">
-                    <a href="#accueil" class="brand">
-                        <img src="AXELlogo.jpeg" alt="axel logo">
-                    </a>
-                </div>
-
-                <p>
-                    Le style commence ici.
-                </p>
-
+            <div class="art-bloc">
+                <a href="#accueil" class="brand footer-brand" aria-label="AXEL">
+                    <img class="logo-art" src="AXELlogo.jpeg" alt="Logo AXEL">
+                </a> 
             </div>
-
+           
+ 
             <div>
-
                 <strong>Navigation</strong>
-
-                <a href="#accueil">
-                    Accueil
-                </a>
-
-                <a href="#boutique">
-                    Boutique
-                </a>
-
-                <a href="#contact">
-                    Contact
-                </a>
-
+                <a href="#accueil">Accueil</a>
+                <a href="#boutique">Boutique</a>
+                <a href="#contact">Contact</a>
             </div>
-
+ 
             <div>
-
                 <strong>Informations</strong>
-
                 <span>Prix en FCFA</span>
-
-                <span>
-                    Disponibilité à confirmer
-                </span>
-
-                <span>
-                    Commande via WhatsApp
-                </span>
-                <h3><strong>En savoir plus sur le site</strong></h3> 
-                    <a  class="lv" href="https://www.maewens.com">Maewen'Steve</a></span>
-
+                <span>Disponibilité à confirmer</span>
+                <span>Commande via WhatsApp</span>
+                <a class="lv" href="https://www.maewens.com" target="_blank" rel="noopener">En savoir plus sur le site : Maewen'Steve</a>
             </div>
-
         </div>
-
+ 
         <div class="footer-bottom">
-
-            © <span id="year"></span>
-            AXEL Store.
-            Tous droits réservés.
-
+            © <span id="year"></span> AXEL Store. Tous droits réservés.
         </div>
-
     </footer>
-
-    <!-- FOND SOMBRE DU PANIER -->
-    <div
-        class="overlay"
-        id="overlay"
-        hidden>
-    </div>
-
-    <!-- PANIER LATÉRAL -->
-    <aside
-        class="drawer"
-        id="drawer"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Panier"
-        aria-hidden="true">
-
-        <!-- En-tête du panier -->
+ 
+    <!-- PANNEAU PANIER / FAVORIS -->
+    <div class="overlay" id="overlay" hidden></div>
+ 
+    <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
         <div class="drawer-header">
-
-            <div>
-
-                <small>
-                    VOTRE SÉLECTION
-                </small>
-
-                <h2 id="drawerTitle">
-                    Mon panier
-                </h2>
-
-            </div>
-
-            <button
-                class="close-btn"
-                id="closeDrawer"
-                aria-label="Fermer">
-
-                ✕
-
+            <h2 id="drawerTitle">Mon panier</h2>
+            <button class="icon-btn" id="closeDrawer" type="button" aria-label="Fermer">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
-
         </div>
-
-        <!-- Articles du panier -->
-        <div
-            id="drawerItems"
-            class="drawer-items">
-        </div>
-
-        <!-- Total et commande -->
-        <div
-            class="drawer-footer"
-            id="drawerFooter">
-
+ 
+        <div class="drawer-items" id="drawerItems"></div>
+ 
+        <div class="drawer-footer" id="drawerFooter">
             <div class="total">
-
-                <span>
-                    Sous-total
-                </span>
-
-                <strong id="cartTotal">
-                    0 FCFA
-                </strong>
-
+                <span>Sous-total</span>
+                <strong id="cartTotal">0 FCFA</strong>
             </div>
-
-            <small>
-                Frais de livraison et
-                disponibilité à confirmer.
-            </small>
-
-            <button
-                class="btn primary full"
-                id="checkout">
-
-                Commander sur WhatsApp ↗
-
-            </button>
-
-            <button
-                class="text-btn"
-                id="clearCart">
-
-                Vider le panier
-
-            </button>
-
+            <small>Frais de livraison et disponibilité confirmés sur WhatsApp.</small>
+            <button class="btn primary full" id="checkout" type="button">Commander sur WhatsApp</button>
+            <button class="text-btn" id="clearCart" type="button">Vider le panier</button>
         </div>
-
     </aside>
-
-    <!-- NOTIFICATIONS -->
-    <div
-        class="toast"
-        id="toast"
-        role="status"
-        aria-live="polite">
-    </div>
+ 
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+ 
     <script src="script.js" defer></script>
-
 </body>
 </html>
+ 
