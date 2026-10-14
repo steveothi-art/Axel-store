@@ -11,7 +11,13 @@
     /* Remplacez cette liste par vos vrais articles.
        image : chemin vers la photo (laisser "" pour afficher une initiale)
        badge : texte optionnel affiché sur la photo (ex. "Nouveau") */
-    const PRODUCTS = [
+    const SUPABASE_URL = "https://snmezmufubfprpkeketw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Hg9RT3YQWrlxM8HGGEUklA_Ln8csLiU";
+
+let PRODUCTS = [];
+
+/* Liste de secours, utilisée seulement si la base est injoignable */
+const FALLBACK_PRODUCTS = [
         { id: 1, name: "Cagoule", category: "Mode",        price: 18000, image: "Cagoule.jpeg", badge: "Nouveau" },
         { id: 2, name: "Pantalon Chrome", category: "Mode",        price: 3000, image: "chromeH.jpeg" },
         { id: 3, name: "Sweater",        category: "Mode",        price: 9000, image: "sweater.jpeg" },
@@ -55,8 +61,6 @@
 
     // Nettoie les données enregistrées si un produit a disparu
     const productById = id => PRODUCTS.find(p => p.id === id);
-    state.cart = state.cart.filter(l => productById(l.id) && l.qty > 0);
-    state.favs = state.favs.filter(productById);
 
     /* ---------- ÉLÉMENTS ---------- */
     const el = {
@@ -445,7 +449,45 @@
     });
 
     /* ---------- DÉMARRAGE ---------- */
-    el.year.textContent = new Date().getFullYear();
-    renderProducts();
-    renderCounts();
+    async function loadProducts() {
+        const url = `${SUPABASE_URL}/rest/v1/products`
+            + `?select=id,name,price,image_url,badge,category:categories(name)`
+            + `&is_active=eq.true&order=id.asc`;
+
+        const res = await fetch(url, { headers: { apikey: SUPABASE_KEY } });
+        if (!res.ok) throw new Error(`Supabase ${res.status}`);
+
+        const rows = await res.json();
+        return rows.map(r => ({
+            id: r.id,
+            name: r.name,
+            category: r.category ? r.category.name : "Autre",
+            price: r.price,
+            image: r.image_url || "",
+            badge: r.badge || ""
+        }));
+    }
+
+    async function start() {
+        el.year.textContent = new Date().getFullYear();
+        el.products.innerHTML = `<p class="loading">Chargement des articles…</p>`;
+        renderCounts();
+
+        try {
+            PRODUCTS = await loadProducts();
+        } catch (err) {
+            console.error("Chargement des produits impossible :", err);
+            PRODUCTS = FALLBACK_PRODUCTS;
+            toast("Connexion à la base impossible, affichage hors ligne");
+        }
+
+        // Nettoie panier et favoris si un produit a disparu
+        state.cart = state.cart.filter(l => productById(l.id) && l.qty > 0);
+        state.favs = state.favs.filter(id => productById(id));
+
+        renderCounts();
+        renderProducts();
+    }
+
+    start();
 })();
