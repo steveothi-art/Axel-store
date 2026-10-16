@@ -340,9 +340,18 @@ const FALLBACK_PRODUCTS = [
     }
 
     /* ---------- COMMANDE WHATSAPP ---------- */
+        function saveOrder() {
+        const items = state.cart.map(l => ({ id: l.id, qty: l.qty }));
+        fetch(`${SUPABASE_URL}/rest/v1/rpc/create_order`, {
+            method: "POST",
+            headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+            body: JSON.stringify({ p_items: items }),
+            keepalive: true
+        }).catch(err => console.error("Commande non enregistrée :", err));
+    }
     function checkout() {
         if (state.cart.length === 0) return;
-
+                    saveOrder();
         const lines = state.cart.map(l => {
             const p = productById(l.id);
             return `• ${l.qty} x ${p.name} : ${formatPrice(p.price * l.qty)}`;
