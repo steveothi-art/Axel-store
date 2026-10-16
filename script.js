@@ -8,16 +8,13 @@
     const WHATSAPP_NUMBER = "2250152348458";
     const CURRENCY = "FCFA";
 
-    /* Remplacez cette liste par vos vrais articles.
-       image : chemin vers la photo (laisser "" pour afficher une initiale)
-       badge : texte optionnel affiché sur la photo (ex. "Nouveau") */
     const SUPABASE_URL = "https://snmezmufubfprpkeketw.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Hg9RT3YQWrlxM8HGGEUklA_Ln8csLiU";
+    const SUPABASE_KEY = "sb_publishable_Hg9RT3YQWrlxM8HGGEUklA_Ln8csLiU";
 
-let PRODUCTS = [];
+    let PRODUCTS = [];
 
-/* Liste de secours, utilisée seulement si la base est injoignable */
-const FALLBACK_PRODUCTS = [
+    /* Liste de secours, utilisée seulement si la base est injoignable */
+    const FALLBACK_PRODUCTS = [
         { id: 1, name: "Cagoule", category: "Mode",        price: 18000, image: "Cagoule.jpeg", badge: "Nouveau" },
         { id: 2, name: "Pantalon Chrome", category: "Mode",        price: 3000, image: "chromeH.jpeg" },
         { id: 3, name: "Sweater",        category: "Mode",        price: 9000, image: "sweater.jpeg" },
@@ -59,7 +56,6 @@ const FALLBACK_PRODUCTS = [
         drawerMode: "cart"                     // "cart" | "favs"
     };
 
-    // Nettoie les données enregistrées si un produit a disparu
     const productById = id => PRODUCTS.find(p => p.id === id);
 
     /* ---------- ÉLÉMENTS ---------- */
@@ -340,18 +336,36 @@ const FALLBACK_PRODUCTS = [
     }
 
     /* ---------- COMMANDE WHATSAPP ---------- */
-   function saveOrder() {
+
+    /* Enregistre la commande et renvoie son numéro (ou null en cas d'échec) */
+    async function saveOrder() {
         const items = state.cart.map(l => ({ id: l.id, qty: l.qty }));
-        fetch(`${SUPABASE_URL}/rest/v1/rpc/create_order`, {
-            method: "POST",
-            headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
-            body: JSON.stringify({ p_items: items }),
-            keepalive: true
-        }).catch(err => console.error("Commande non enregistrée :", err));
+        try {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/create_order`, {
+                method: "POST",
+                headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+                body: JSON.stringify({ p_items: items })
+            });
+            if (!res.ok) throw new Error(`Supabase ${res.status}`);
+            return await res.json();
+        } catch (err) {
+            console.error("Commande non enregistrée :", err);
+            return null;
+        }
     }
-    function checkout() {
-        if (state.cart.length === 0) return;
-            saveOrder();
+
+    async function checkout() {
+        if (state.cart.length === 0 || el.checkout.disabled) return;
+
+        // On ouvre l'onglet tout de suite (sinon le navigateur le bloque), puis on le redirige
+        const win = window.open("", "_blank");
+        el.checkout.disabled = true;
+
+        const orderId = await Promise.race([
+            saveOrder(),
+            new Promise(resolve => setTimeout(() => resolve(null), 4000))
+        ]);
+
         const lines = state.cart.map(l => {
             const p = productById(l.id);
             return `• ${l.qty} x ${p.name} : ${formatPrice(p.price * l.qty)}`;
@@ -359,6 +373,7 @@ const FALLBACK_PRODUCTS = [
 
         const message = [
             "Bonjour AXEL, je souhaite commander :",
+            ...(orderId ? ["", `Commande n° ${orderId}`] : []),
             "",
             ...lines,
             "",
@@ -367,7 +382,11 @@ const FALLBACK_PRODUCTS = [
             "Pouvez-vous confirmer la disponibilité et les frais de livraison ? Merci."
         ].join("\n");
 
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+        const link = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        if (win) { win.opener = null; win.location.href = link; }
+        else { window.location.href = link; }
+
+        el.checkout.disabled = false;
     }
 
     /* ---------- ÉVÉNEMENTS ---------- */
