@@ -371,7 +371,7 @@
             return `• ${l.qty} x ${p.name} : ${formatPrice(p.price * l.qty)}`;
         });
 
-        const message = [
+                 const message = [
             "Bonjour AXEL, je souhaite commander :",
             ...(orderId ? ["", `Commande n° ${orderId}`] : []),
             "",
@@ -381,7 +381,6 @@
             "",
             "Pouvez-vous confirmer la disponibilité et les frais de livraison ? Merci."
         ].join("\n");
-
         const link = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
         if (win) { win.opener = null; win.location.href = link; }
         else { window.location.href = link; }
